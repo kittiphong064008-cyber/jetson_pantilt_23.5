@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1380</width>
+    <height>890</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Jetson Pan-Tilt Controller (v22)</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget { background-color: #161616; color: #eee; }
+QGroupBox { border: 1px solid #3e3e3e; border-radius: 6px; margin-top: 12px; padding-top: 12px; font-weight: bold; color: #aaa; }
+QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top center; padding: 0 4px; }
+QComboBox { background: #262626; color: #eee; padding: 4px; border: 1px solid #444; border-radius: 4px; }
+QPushButton { background: #2d2d2d; color: #eee; border: 1px solid #555; border-radius: 4px; padding: 5px 10px; }
+QPushButton:hover { background: #3d3d3d; }
+QSpinBox, QDoubleSpinBox { background: #262626; color: #eee; border: 1px solid #444; border-radius: 4px; padding: 2px 4px; }
+QSlider::groove:vertical { background: #333; width: 8px; border-radius: 4px; }
+QSlider::handle:vertical { background: #00aaff; height: 16px; margin: 0 -4px; border-radius: 4px; }</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="mainH">
+    <property name="spacing">
+     <number>12</number>
+    </property>
+    <item>
+     <layout class="QVBoxLayout" name="leftCol">
+      <item>
+       <widget class="QLabel" name="panTitle">
+        <property name="styleSheet">
+         <string notr="true">font-weight:bold; font-size:15px; color:#00d0ff;</string>
+        </property>
+        <property name="text">
+         <string>PAN CAMERA (Wide / Search)</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="m_panView">
+        <property name="minimumSize">
+         <size>
+          <width>640</width>
+          <height>360</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#080808; border:2px solid #2a2a2a; border-radius:6px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="r1">
+        <item>
+         <widget class="QLabel" name="lbl_cam1">
+          <property name="text">
+           <string>Cam:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_panCameraSelect"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_modelBrowseBtn">
+          <property name="text">
+           <string>Browse YOLO .engine</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="m_modelLabel">
+          <property name="styleSheet">
+           <string notr="true">color:#888; font-size:11px;</string>
+          </property>
+          <property name="text">
+           <string>No Model</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_aiToggleBtn">
+          <property name="styleSheet">
+           <string notr="true">background:#444; color:#fff; font-weight:bold; padding:5px 12px; border-radius:4px;</string>
+          </property>
+          <property name="text">
+           <string>AI OFF</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_settingsBtn">
+          <property name="styleSheet">
+           <string notr="true">background:#2c3e50; color:#fff; font-weight:bold; padding:5px 12px; border-radius:4px;</string>
+          </property>
+          <property name="text">
+           <string>Settings</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="r2">
+        <item>
+         <widget class="QLabel" name="lbl_conf">
+          <property name="text">
+           <string>Conf:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="m_confSpinBox">
+          <property name="minimum">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.050000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.250000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_iou">
+          <property name="text">
+           <string>IoU:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="m_iouSpinBox">
+          <property name="minimum">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.050000000000000</double>
+          </property>
+          <property name="value">
+           <double>0.450000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_panSkip">
+          <property name="text">
+           <string>Pan Skip:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="m_panSkipFrameSpinBox">
+          <property name="suffix">
+           <string> f</string>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_zoomSkip">
+          <property name="text">
+           <string>Zoom Skip:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="m_zoomSkipFrameSpinBox">
+          <property name="suffix">
+           <string> f</string>
+          </property>
+          <property name="maximum">
+           <number>30</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_predDirBtn">
+          <property name="styleSheet">
+           <string notr="true">background:#444; color:#fff; font-weight:bold; padding:5px 12px; border-radius:4px;</string>
+          </property>
+          <property name="text">
+           <string>Pred Dir: OFF</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="r2Spacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="r3">
+        <item>
+         <widget class="QLabel" name="lbl_lock">
+          <property name="styleSheet">
+           <string notr="true">font-weight:bold; color:#ffd700;</string>
+          </property>
+          <property name="text">
+           <string>Lock Target:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_targetSelectCombo">
+          <item>
+           <property name="text">
+            <string>Auto (First Target)</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="m_clearLockBtn">
+          <property name="styleSheet">
+           <string notr="true">background:#444; color:#fff; font-weight:bold; padding:4px 10px; border-radius:4px;</string>
+          </property>
+          <property name="text">
+           <string>Clear Lock</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="r3Spacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="sensorBox">
+        <property name="title">
+         <string>Base Station Telemetry (Filtered)</string>
+        </property>
+        <layout class="QGridLayout" name="sg">
+         <item row="0" column="0">
+          <widget class="QLabel" name="m_sensorHeadingLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#a0e0ff; font-family:monospace; font-weight:bold;</string>
+           </property>
+           <property name="text">
+            <string>Heading: 0.0</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="m_sensorRollLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#a0e0ff; font-family:monospace; font-weight:bold;</string>
+           </property>
+           <property name="text">
+            <string>Roll: 0.0</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel" name="m_sensorGpsLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#ffd060; font-family:monospace; font-weight:bold;</string>
+           </property>
+           <property name="text">
+            <string>GPS: No Fix (0 Sat)</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="m_sensorCoordLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#d0d0d0; font-family:monospace;</string>
+           </property>
+           <property name="text">
+            <string>Lat: 0.000000 | Lon: 0.000000</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="m_sensorAltLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#d0d0d0; font-family:monospace;</string>
+           </property>
+           <property name="text">
+            <string>Alt: 0.0 m</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="m_relocateBaseBtn">
+           <property name="toolTip">
+            <string>Reset GPS cumulative average for a new base location</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:#205072; color:#fff; font-weight:bold; padding:4px 8px; border-radius:4px;</string>
+           </property>
+           <property name="text">
+            <string>Relocate Base</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="calcBox">
+        <property name="title">
+         <string>Target Geo-Coordinates (Flowchart)</string>
+        </property>
+        <layout class="QGridLayout" name="cg">
+         <item row="0" column="0">
+          <widget class="QLabel" name="m_calcTargetInfoLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#00ffaa; font-family:monospace; font-weight:bold; font-size:13px;</string>
+           </property>
+           <property name="text">
+            <string>Target: None [Searching]</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="m_calcDistLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#ffd060; font-family:monospace; font-weight:bold;</string>
+           </property>
+           <property name="text">
+            <string>Distance (d): -- m</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="m_calcTargetCoordLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#00e5ff; font-family:monospace; font-weight:bold;</string>
+           </property>
+           <property name="text">
+            <string>Target Lat: -- | Lon: --</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="m_calcTargetAltLabel">
+           <property name="styleSheet">
+            <string notr="true">color:#00e5ff; font-family:monospace; font-weight:bold;</string>
+           </property>
+           <property name="text">
+            <string>Target Alt: -- m</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="rightCol">
+      <item>
+       <widget class="QLabel" name="zoomTitle">
+        <property name="styleSheet">
+         <string notr="true">font-weight:bold; font-size:15px; color:#00ffaa;</string>
+        </property>
+        <property name="text">
+         <string>ZOOM CAMERA (Identification &amp; Distance)</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="m_zoomView">
+        <property name="minimumSize">
+         <size>
+          <width>540</width>
+          <height>400</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background:#080808; border:2px solid #2a2a2a; border-radius:6px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="zr">
+        <item>
+         <widget class="QLabel" name="lbl_cam2">
+          <property name="text">
+           <string>Cam:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="m_zoomCameraSelect"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="botRow">
+        <item>
+         <widget class="QGroupBox" name="modeBox">
+          <property name="title">
+           <string>Control Mode</string>
+          </property>
+          <layout class="QVBoxLayout" name="ml">
+           <item>
+            <widget class="QPushButton" name="m_modeBtn">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>60</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background:#28a745; color:white; font-size:16px; font-weight:bold; border-radius:6px;</string>
+             </property>
+             <property name="text">
+              <string>MANUAL</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="joyBox">
+          <property name="title">
+           <string>Joystick</string>
+          </property>
+          <layout class="QVBoxLayout" name="jl">
+           <item>
+            <widget class="JoystickWidget" name="m_joystick" native="true">
+             <property name="minimumSize">
+              <size>
+               <width>140</width>
+               <height>140</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="speedBox">
+          <property name="title">
+           <string>SPEED</string>
+          </property>
+          <layout class="QVBoxLayout" name="sl">
+           <item>
+            <widget class="QLabel" name="fastLbl">
+             <property name="styleSheet">
+              <string notr="true">font-size:10px; color:#0f0;</string>
+             </property>
+             <property name="text">
+              <string>FAST</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="m_speedSlider">
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Orientation::Vertical</enum>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TickPosition::TicksBothSides</enum>
+             </property>
+             <property name="tickInterval">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="slowLbl">
+             <property name="styleSheet">
+              <string notr="true">font-size:10px; color:#f00;</string>
+             </property>
+             <property name="text">
+              <string>SLOW</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="m_speedValueLabel">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="m_motorLabel">
+        <property name="styleSheet">
+         <string notr="true">color:#00ffc8; font-family:monospace; font-weight:bold; font-size:13px; padding:4px;</string>
+        </property>
+        <property name="text">
+         <string>Motor: STOP</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>JoystickWidget</class>
+   <extends>QWidget</extends>
+   <header>JoystickWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

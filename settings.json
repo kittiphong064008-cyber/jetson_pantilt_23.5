@@ -1,0 +1,31 @@
+{
+  "pan_focal_mm": 5.0,
+  "pan_sensor_w_mm": 5.76,
+  "zoom_focal_mm": 50.0,
+  "zoom_sensor_w_mm": 5.76,
+  "pan_center_x": 320,
+  "pan_center_y": 240,
+  "zoom_center_x": 320,
+  "zoom_center_y": 240,
+  "pid_kp": 1.0,
+  "pid_ki": 0.02,
+  "pid_kd": 0.35,
+  "pid_deadband": 0.04,
+  "auto_min_speed": 500,
+  "auto_max_speed": 3200,
+  "pan_cap_w": 640,
+  "pan_cap_h": 480,
+  "zoom_cap_w": 640,
+  "zoom_cap_h": 480,
+  "pan_disp_w": 320,
+  "pan_disp_h": 240,
+  "zoom_disp_w": 320,
+  "zoom_disp_h": 240,
+  "classes": [
+    {
+      "id": 0,
+      "name": "drone",
+      "w_real": 0.35
+    }
+  ]
+}
